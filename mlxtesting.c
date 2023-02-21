@@ -3,7 +3,7 @@
 # include <unistd.h>
 # include <math.h>
 
-#include "minilibx/mlx.h"
+#include "includes/minilibx/mlx.h"
 
 typedef struct	s_data {
 	void	*img;
