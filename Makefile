@@ -1,5 +1,5 @@
 NAME 	= 	cub3D
-FILES	= 	mlxtesting \
+FILES	= 	mlxtesting color_change
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
@@ -16,16 +16,20 @@ OBJS_B = $(addprefix $(OBJS_B_DIR), $(addsuffix .o, $(FILES_B)))
 LIBFT_DIR = ./includes/libft/
 LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -Iminilibx
 
-LIBRARIES = -lft -L $(LIBFT_DIR) -lmlx -framework OpenGL -framework AppKit
-HEADERS = -I $(LIBFT_DIR)
 .c.o		:
 				${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME} 	:	$(LIBFT) ${OBJS}
-				@${CC} ${CFLAGS} ${LIBRARIES} ${OBJS} -o $@
+${NAME} 	:	minilibx/libmlx.a ${OBJS}
+				@${CC} ${CFLAGS} -Lminilibx -lmlx -framework OpenGL -framework AppKit $(OBJS) -o $@
 				@echo "\033[32m\n🎮  cub3D Compiled !\n"
+
+minilibx/libmlx.a:
+	curl https://raw.githubusercontent.com/Nimpoo/cub3d/dev/minilibx.tgz -o minilibx.tgz
+	tar -xf minilibx.tgz
+	rm minilibx.tgz
+	make -C minilibx
 
 $(LIBFT)	:	
 				@echo "\033[32m\n🧠 Compiling ... \n\033[33;1m"
@@ -35,7 +39,7 @@ $(LIBFT)	:
 ${BONUS}	:	${OBJS_B}
 				@${CC} ${CFLAGS} ${OBJS_B} -o $@
 				@echo "\033[32m\n📊 Checker Compiled !\n"
-				
+
 all			:	${NAME}
 
 bonus		:	${NAME} ${BONUS}

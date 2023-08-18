@@ -6,7 +6,7 @@
 # include <unistd.h>
 # include <math.h>
 
-#include "includes/minilibx/mlx.h"
+#include <mlx.h>
 
 int	create_trgb(int t, int r, int g, int b);
 int	get_t(int trgb);
